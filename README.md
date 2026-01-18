@@ -6,14 +6,25 @@ Whether you are a teacher merging grades, an HR professional updating employee r
 
 ## 📸 Screenshots
 
-![Home Page](assets/preview_home.png)
-*Modern and Clean Interface*
+![Application UI](assets/ui_overview.png)
+*Modern Main Interface*
 
-![Merge Steps](assets/preview_steps.png)
-*Easy Step-by-Step Configuration*
+## 🎬 Visualization
 
-![Match Results](assets/preview_results.png)
-*Real-time Data Preview & Validation*
+### 1. Data Preparation
+Simply have two Excel files. A **Main Table** that needs data, and a **Source Table** that has the data.
+*   **Target (Main)**: The file you want to fill.
+    ![Target Example](assets/demo_target.png)
+*   **Source (Data)**: The file providing information.
+    ![Source Example](assets/demo_source.png)
+
+### 2. Easy Configuration
+Select how to match rows (e.g., by Employee ID) and what data to fill (e.g., Salary).
+![Match Steps](assets/ui_preview.png)
+
+### 3. Result
+Get a perfectly merged file instantly.
+![Merge Result](assets/demo_result.png)
 
 
 ## 🌟 Features
@@ -64,21 +75,15 @@ Whether you are a teacher merging grades, an HR professional updating employee r
 
 ### 📦 Packaging as EXE (Windows)
 
-If you want to create a standalone `.exe` file to run this tool without installing Python everywhere:
+We provide a one-click build script to create a standalone `.exe` without needing a complex setup:
 
-1.  **Install PyInstaller**:
-    ```bash
-    pip install pyinstaller
-    ```
+1.  **Run Build Script**:
+    Double-click the **`build_windows.bat`** file in the project root.
+    *(This script automatically sets up a clean environment, installs minimal dependencies, and applies UPX compression)*
 
-2.  **Run Build Command**:
-    Execute the following command in the project root directory:
-    ```bash
-    pyinstaller --noconfirm --clean --onefile --console --add-data "templates;templates" --add-data "static;static" --name "ExcelMergePro" app.py
-    ```
-
-3.  **Locate EXE**:
-    The generated `ExcelMergePro.exe` will be in the `dist` folder.
+2.  **Locate EXE**:
+    The generated `ExcelMergePro.exe` matches will be in the `dist` folder.
+    (Optimized size is approx 12MB)
 
 ### 🍎 Packaging for macOS (Apple Silicon M1/M2/M3 & Intel)
 
@@ -180,21 +185,15 @@ This project is created for personal and educational use. Feel free to modify an
 
 ### 📦 打包为 EXE (Windows)
 
-如果您想将工具打包成无需 Python 环境即可独立运行的 `.exe` 文件：
+如果您想将工具打包成无需 Python 环境即可独立运行的 `.exe` 文件，我们现在提供了一键打包脚本：
 
-1.  **安装 PyInstaller**：
-    ```bash
-    pip install pyinstaller
-    ```
+1.  **运行打包脚本**：
+    双击项目根目录下的 **`build_windows.bat`** 文件。
+    *(脚本会自动创建虚拟环境、安装最小依赖、并执行优化压缩打包)*
 
-2.  **执行打包命令**：
-    在项目根目录下运行以下命令：
-    ```bash
-    pyinstaller --noconfirm --clean --onefile --console --add-data "templates;templates" --add-data "static;static" --name "ExcelMergePro" app.py
-    ```
-
-3.  **获取程序**：
-    生成后的 `ExcelMergePro.exe` 文件位于 `dist` 文件夹中。
+2.  **获取程序**：
+    脚本运行完成后，生成的 `ExcelMergePro.exe` 文件位于 `dist` 文件夹中。
+    (目前经过 UPX 压缩和依赖剔除优化，体积约为 12MB 左右)
 
 ### 🍎 打包为 macOS 应用 (M1/M2/Intel)
 

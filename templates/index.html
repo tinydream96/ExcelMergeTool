@@ -5,14 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Excel Merger Pro</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <div class="glass-container">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h1>Excel 数据自动匹配合并工具</h1>
-            <button onclick="shutdownApp()" style="background: #ff4d4d; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">退出并关闭应用</button>
+            <h1 style="display: flex; align-items: center; gap: 12px;">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"
+                    style="width: 40px; height: 40px; border-radius: 8px;">
+                Excel 数据自动匹配合并工具
+            </h1>
+            <button onclick="shutdownApp()"
+                style="background: #ff4d4d; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+                onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">退出并关闭应用</button>
         </div>
         <p class="subtitle">无需 VLOOKUP 公式！只需两张表有类似“学号”的共同列，即可自动将【来源表】的数据精准填充到【主表】中。</p>
 

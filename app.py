@@ -205,14 +205,12 @@ def shutdown():
 
 if __name__ == '__main__':
 
-    # Open browser automatically
-    import subprocess
+    import webbrowser
     from threading import Timer
     
     def open_browser():
         try:
-            # Use macOS 'open' command which is more reliable in bundled apps
-            subprocess.Popen(['open', "http://127.0.0.1:5001"])
+            webbrowser.open("http://127.0.0.1:5001")
         except Exception as e:
             logging.error(f"Failed to open browser: {e}")
 

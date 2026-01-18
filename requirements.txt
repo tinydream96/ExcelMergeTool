@@ -2,3 +2,4 @@ flask
 openpyxl
 xlrd
 pyinstaller
+Pillow
