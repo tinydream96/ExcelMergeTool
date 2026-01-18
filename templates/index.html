@@ -10,8 +10,26 @@
 
 <body>
     <div class="glass-container">
-        <h1>Excel 数据自动匹配合并工具</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Excel 数据自动匹配合并工具</h1>
+            <button onclick="shutdownApp()" style="background: #ff4d4d; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">退出并关闭应用</button>
+        </div>
         <p class="subtitle">无需 VLOOKUP 公式！只需两张表有类似“学号”的共同列，即可自动将【来源表】的数据精准填充到【主表】中。</p>
+
+        <script>
+            function shutdownApp() {
+                if (confirm("确定要彻底关闭退出应用吗？服务器将停止运行。")) {
+                    fetch('/shutdown', { method: 'POST' })
+                        .then(() => {
+                            document.body.innerHTML = '<div style="background: white; color: #333; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: -apple-system, sans-serif;"><h1>✅ 服务已停止</h1><p>应用已安全退出，您可以关闭此浏览器窗口。</p></div>';
+                            setTimeout(() => { window.close(); }, 1000);
+                        })
+                        .catch(err => {
+                            alert("退出请求已发送，请手动关闭此页面及终端窗口。");
+                        });
+                }
+            }
+        </script>
 
         <div id="step-1">
             <div class="upload-grid">

@@ -41,9 +41,9 @@ Whether you are a teacher merging grades, an HR professional updating employee r
     ```
 
 2.  **Install dependencies**:
-    You will need `Flask` for the web server and `pandas` for data processing.
+    You will need `Flask` for the web server and `openpyxl` for data processing.
     ```bash
-    pip install flask pandas openpyxl xlrd
+    pip install flask openpyxl xlrd
     ```
 
 ### Usage
@@ -91,10 +91,11 @@ If you want to create a standalone `.exe` file to run this tool without installi
     pip3 install pyinstaller
     ```
 
-3.  **Run Build Command**:
-    (Note the use of `:` separator instead of `;`)
+3.  **Run Optimized Build**:
+    We provide a script to create a clean environment and bundle the app with a minimal footprint:
     ```bash
-    pyinstaller --noconfirm --clean --onefile --windowed --add-data "templates:templates" --add-data "static:static" --name "ExcelMergePro" app.py
+    chmod +x build_optimized.sh
+    ./build_optimized.sh
     ```
 
 4.  **Locate App**:
@@ -116,7 +117,7 @@ ExcelMergeTool/
 ## 🛠️ Technology Stack
 
 - **Backend**: Python, Flask
-- **Data Processing**: Pandas, OpenPyXL
+- **Data Processing**: OpenPyXL, CSV
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
 
 ## 📝 License
@@ -156,9 +157,9 @@ This project is created for personal and educational use. Feel free to modify an
     ```
 
 2.  **安装依赖**：
-    您需要安装 `Flask` 用于 Web 服务，以及 `pandas` 用于数据处理。
+    您需要安装 `Flask` 用于 Web 服务，以及 `openpyxl` 用于数据处理。
     ```bash
-    pip install -r requirements.txt
+    pip install flask openpyxl xlrd
     ```
 
 ### 使用方法
@@ -206,10 +207,11 @@ This project is created for personal and educational use. Feel free to modify an
     pip3 install pyinstaller
     ```
 
-3.  **执行打包命令**：
-    (注意这里使用冒号 `:` 分隔，而不是分号 `;`)
+3.  **执行优化打包**：
+    我们提供了一个自动化脚本来创建纯净环境并最小化体积：
     ```bash
-    pyinstaller --noconfirm --clean --onefile --windowed --add-data "templates:templates" --add-data "static:static" --name "ExcelMergePro" app.py
+    chmod +x build_optimized.sh
+    ./build_optimized.sh
     ```
 
 4.  **获取程序**：
@@ -231,7 +233,7 @@ ExcelMergeTool/
 ## 🛠️ 技术栈
 
 - **后端**: Python, Flask
-- **数据处理**: Pandas, OpenPyXL
+- **数据处理**: OpenPyXL, CSV
 - **前端**: HTML5, CSS3, JavaScript (原生)
 
 ## 📝 许可证
