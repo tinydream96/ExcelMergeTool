@@ -1,18 +1,47 @@
-uploads/
+# Python
 __pycache__/
 *.pyc
-.DS_Store
-.env
-
-# Python Virtual Environment
-venv/
+*.pyo
+*.pyd
+.Python
 env/
+venv/
+venv_clean/
+venv_pack/
+pip-log.txt
+pip-delete-this-directory.txt
+.venv
+.env
+.tox
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
 
 # PyInstaller / Build Artifacts
 dist/
 build/
 *.spec
 
-# IDE Settings (Optional but recommended)
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Project Specific
+uploads/
+icon.iconset/
+
+# IDE Settings
 .vscode/
 .idea/
+*.swp
+*.swo
+
