@@ -3,3 +3,16 @@ __pycache__/
 *.pyc
 .DS_Store
 .env
+
+# Python Virtual Environment
+venv/
+env/
+
+# PyInstaller / Build Artifacts
+dist/
+build/
+*.spec
+
+# IDE Settings (Optional but recommended)
+.vscode/
+.idea/
