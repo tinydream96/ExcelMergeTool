@@ -80,6 +80,26 @@ If you want to create a standalone `.exe` file to run this tool without installi
 3.  **Locate EXE**:
     The generated `ExcelMergePro.exe` will be in the `dist` folder.
 
+### 🍎 Packaging for macOS (Apple Silicon M1/M2/M3 & Intel)
+
+**Note**: You must run this **on a Mac**. You cannot build a Mac app from Windows.
+
+1.  **Open Terminal** in the project folder.
+
+2.  **Install PyInstaller**:
+    ```bash
+    pip3 install pyinstaller
+    ```
+
+3.  **Run Build Command**:
+    (Note the use of `:` separator instead of `;`)
+    ```bash
+    pyinstaller --noconfirm --clean --onefile --windowed --add-data "templates:templates" --add-data "static:static" --name "ExcelMergePro" app.py
+    ```
+
+4.  **Locate App**:
+    The generated `ExcelMergePro.app` will be in the `dist` folder.
+
 ## 📂 Project Structure
 
 ```
@@ -173,7 +193,27 @@ This project is created for personal and educational use. Feel free to modify an
     ```
 
 3.  **获取程序**：
-    生成的 `ExcelMergePro.exe` 文件位于 `dist` 文件夹中。
+    生成后的 `ExcelMergePro.exe` 文件位于 `dist` 文件夹中。
+
+### 🍎 打包为 macOS 应用 (M1/M2/Intel)
+
+**注意**: 这些步骤必须**在 Mac 电脑上运行**。您无法从 Windows 生成 Mac 应用程序。
+
+1.  **打开终端 (Terminal)** 并进入项目目录。
+
+2.  **安装 PyInstaller**：
+    ```bash
+    pip3 install pyinstaller
+    ```
+
+3.  **执行打包命令**：
+    (注意这里使用冒号 `:` 分隔，而不是分号 `;`)
+    ```bash
+    pyinstaller --noconfirm --clean --onefile --windowed --add-data "templates:templates" --add-data "static:static" --name "ExcelMergePro" app.py
+    ```
+
+4.  **获取程序**：
+    生成的 `ExcelMergePro.app` 将在 `dist` 文件夹中。
 
 ## 📂 项目结构
 
