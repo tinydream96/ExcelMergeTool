@@ -4,6 +4,18 @@
 
 Whether you are a teacher merging grades, an HR professional updating employee records, or an analyst combining datasets, this tool streamlines the process with a clean, intuitive interface.
 
+## 📸 Screenshots
+
+![Home Page](assets/preview_home.png)
+*Modern and Clean Interface*
+
+![Merge Steps](assets/preview_steps.png)
+*Easy Step-by-Step Configuration*
+
+![Match Results](assets/preview_results.png)
+*Real-time Data Preview & Validation*
+
+
 ## 🌟 Features
 
 - **📂 Multi-Format Support**: Seamlessly handle `.xlsx`, `.xls`, and `.csv` files.
