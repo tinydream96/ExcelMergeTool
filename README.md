@@ -62,6 +62,24 @@ Whether you are a teacher merging grades, an HR professional updating employee r
     - **Step 3**: Add mapping rules (e.g., Map "Midterm_Score" from Source -> "Midterm" in Target).
     - **Step 4**: Click **Preview** to see match stats, then **Merge & Download** to get your result.
 
+### 📦 Packaging as EXE (Windows)
+
+If you want to create a standalone `.exe` file to run this tool without installing Python everywhere:
+
+1.  **Install PyInstaller**:
+    ```bash
+    pip install pyinstaller
+    ```
+
+2.  **Run Build Command**:
+    Execute the following command in the project root directory:
+    ```bash
+    pyinstaller --noconfirm --clean --onefile --console --add-data "templates;templates" --add-data "static;static" --name "ExcelMergePro" app.py
+    ```
+
+3.  **Locate EXE**:
+    The generated `ExcelMergePro.exe` will be in the `dist` folder.
+
 ## 📂 Project Structure
 
 ```
@@ -138,6 +156,24 @@ This project is created for personal and educational use. Feel free to modify an
     - **第二步**：选择匹配主键（例如：两个文件中的 "学号"）。
     - **第三步**：添加映射规则（例如：将源文件的 "平时分" 映射 -> 目标文件的 "平时成绩"）。
     - **第四步**：点击 **预览** 查看匹配统计，然后点击 **确认合并并下载** 获取结果。
+
+### 📦 打包为 EXE (Windows)
+
+如果您想将工具打包成无需 Python 环境即可独立运行的 `.exe` 文件：
+
+1.  **安装 PyInstaller**：
+    ```bash
+    pip install pyinstaller
+    ```
+
+2.  **执行打包命令**：
+    在项目根目录下运行以下命令：
+    ```bash
+    pyinstaller --noconfirm --clean --onefile --console --add-data "templates;templates" --add-data "static;static" --name "ExcelMergePro" app.py
+    ```
+
+3.  **获取程序**：
+    生成的 `ExcelMergePro.exe` 文件位于 `dist` 文件夹中。
 
 ## 📂 项目结构
 
