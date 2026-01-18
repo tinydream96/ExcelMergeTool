@@ -1,0 +1,151 @@
+# Universal Excel Merger Pro (Excel Merge Tool)
+
+**Universal Excel Merger Pro** is a modern, web-based tool designed to solve the common headache of merging data between different Excel files. Think of it as a "Visual VLOOKUP" or "Batch Match & Fill" tool that allows you to easily transfer data from a **Source File** to a **Target File** based on a unique identifier (Key).
+
+Whether you are a teacher merging grades, an HR professional updating employee records, or an analyst combining datasets, this tool streamlines the process with a clean, intuitive interface.
+
+## 🌟 Features
+
+- **📂 Multi-Format Support**: Seamlessly handle `.xlsx`, `.xls`, and `.csv` files.
+- **🔗 Smart Key Matching**: Link records between files using a unique key (e.g., Student ID, Phone Number, Product Code).
+- **🗺️ Flexible Column Mapping**: easy-to-use interface to map multiple columns from source to target (e.g., "Fill 'Grade' in Target with 'Final Score' from Source").
+- **👀 Data Preview**: Instant feedback on how many records matched successfully before you download.
+- **📊 Sheet Support**: Select specific sheets from multi-sheet Excel workbooks.
+- **🎨 Modern UI**: Features a beautiful "Glassmorphism" design for a premium user experience.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.8+
+- `pip` (Python package manager)
+
+### Installation
+
+1.  **Clone the repository** (or download the source code):
+    ```bash
+    git clone <repository-url>
+    cd ExcelMergeTool
+    ```
+
+2.  **Install dependencies**:
+    You will need `Flask` for the web server and `pandas` for data processing.
+    ```bash
+    pip install flask pandas openpyxl xlrd
+    ```
+
+### Usage
+
+1.  **Start the application**:
+    ```bash
+    python app.py
+    ```
+
+2.  **Open in Browser**:
+    Visit `http://localhost:5001` in your web browser.
+
+3.  **Merge Data**:
+    - **Step 1**: Upload your **Target File** (the file you want to edit) and **Source File** (the file containing new data).
+    - **Step 2**: Select the match keys (e.g., "Student ID" in both files).
+    - **Step 3**: Add mapping rules (e.g., Map "Midterm_Score" from Source -> "Midterm" in Target).
+    - **Step 4**: Click **Preview** to see match stats, then **Merge & Download** to get your result.
+
+## 📂 Project Structure
+
+```
+ExcelMergeTool/
+├── app.py              # Main Flask application logic
+├── templates/
+│   └── index.html      # Frontend HTML interface
+├── static/
+│   └── style.css       # Stylesheets (Glassmorphism design)
+├── uploads/            # Temporary directory for file processing
+└── README.md           # Project documentation
+```
+
+## 🛠️ Technology Stack
+
+- **Backend**: Python, Flask
+- **Data Processing**: Pandas, OpenPyXL
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+
+## 📝 License
+
+This project is created for personal and educational use. Feel free to modify and improve it!
+
+---
+
+# Universal Excel Merger Pro (Excel 表格合并工具)
+
+**Universal Excel Merger Pro** 是一个现代化的 Web 工具，旨在解决 Excel 文件之间数据合并的繁琐问题。您可以把它看作是一个“可视化 VLOOKUP”或“批量匹配填充”工具，它允许您基于唯一的标识符（Key）轻松地将数据从 **源文件** 传输到 **目标文件**。
+
+无论您是合并成绩的教师、更新员工记录的 HR，还是合并数据集的分析师，此工具都能通过清晰直观的界面简化流程。
+
+## 🌟 功能特性
+
+- **📂 多格式支持**：无缝处理 `.xlsx`, `.xls` 和 `.csv` 文件。
+- **🔗 智能主键匹配**：使用唯一键（如学号、手机号、产品代码）关联文件记录。
+- **🗺️ 灵活的列映射**：简单易用的界面，可将源文件的多列映射到目标文件（例如：将源文件的 "Final Score" 填充到目标文件的 "成绩" 列）。
+- **👀 数据预览**：在下载之前即时反馈匹配成功的记录数。
+- **📊 多 Sheet 支持**：支持从多工作表 Excel 文件中选择特定 Sheet。
+- **🎨 现代化 UI**：采用漂亮的“玻璃拟态 (Glassmorphism)”设计，提供优质的用户体验。
+
+## 🚀 快速开始
+
+### 环境要求
+
+- Python 3.8+
+- `pip` (Python 包管理器)
+
+### 安装
+
+1.  **克隆仓库** (或下载源码)：
+    ```bash
+    git clone <repository-url>
+    cd ExcelMergeTool
+    ```
+
+2.  **安装依赖**：
+    您需要安装 `Flask` 用于 Web 服务，以及 `pandas` 用于数据处理。
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### 使用方法
+
+1.  **启动应用**：
+    ```bash
+    python app.py
+    ```
+
+2.  **在浏览器打开**：
+    访问 `http://localhost:5001`。
+
+3.  **合并数据**：
+    - **第一步**：上传您的 **目标文件**（您想要修改的文件）和 **源文件**（包含新数据的文件）。
+    - **第二步**：选择匹配主键（例如：两个文件中的 "学号"）。
+    - **第三步**：添加映射规则（例如：将源文件的 "平时分" 映射 -> 目标文件的 "平时成绩"）。
+    - **第四步**：点击 **预览** 查看匹配统计，然后点击 **确认合并并下载** 获取结果。
+
+## 📂 项目结构
+
+```
+ExcelMergeTool/
+├── app.py              # Flask 主程序逻辑
+├── templates/
+│   └── index.html      # 前端 HTML 界面
+├── static/
+│   └── style.css       # 样式表 (玻璃拟态设计)
+├── uploads/            # 文件处理临时目录
+└── README.md           # 项目文档
+```
+
+## 🛠️ 技术栈
+
+- **后端**: Python, Flask
+- **数据处理**: Pandas, OpenPyXL
+- **前端**: HTML5, CSS3, JavaScript (原生)
+
+## 📝 许可证
+
+本项目仅供个人和教育使用。欢迎随意修改和改进！

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Excel Merger Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="glass-container">
+        <h1>Excel 数据自动匹配合并工具</h1>
+        <p class="subtitle">无需 VLOOKUP 公式！只需两张表有类似“学号”的共同列，即可自动将【来源表】的数据精准填充到【主表】中。</p>
+
+        <div id="step-1">
+            <div class="upload-grid">
+                <!-- Target File Card -->
+                <div class="file-card" onclick="document.getElementById('targetFile').click()">
+                    <div id="targetStatusBadge" class="status-badge" style="display: none;">
+                        <span class="status-dot"></span> <span id="targetStatusText">未上传</span>
+                    </div>
+                    <div class="icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                        </svg>
+                    </div>
+                    <h3>待处理表格 (主文件)</h3>
+                    <p id="targetFileName">点击上传需要填入数据的表格</p>
+                    <input type="file" id="targetFile" hidden onchange="handleUpload('target')">
+                </div>
+
+                <!-- Source File Card -->
+                <div class="file-card" id="sourceCard" onclick="document.getElementById('sourceFile').click()">
+                    <!-- Toggle Switch for Same File -->
+                    <div class="same-file-toggle" onclick="event.stopPropagation()">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="sameFileCheck" onchange="toggleSameFile()">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label">数据就在同一个文件里</span>
+                    </div>
+
+                    <div id="sourceStatusBadge" class="status-badge" style="display: none;">
+                        <span class="status-dot"></span> <span id="sourceStatusText">未上传</span>
+                    </div>
+                    <div class="icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                        </svg>
+                    </div>
+                    <h3>数据来源表格</h3>
+                    <p id="sourceFileName">点击上传包含数据的表格</p>
+                    <input type="file" id="sourceFile" hidden onchange="handleUpload('source')">
+                </div>
+            </div>
+        </div>
+
+        <div id="step-2" style="display: none;" class="mapping-section">
+            <div class="control-grid">
+                <div class="form-group">
+                    <label>我要修改哪一页 (主表Sheet)</label>
+                    <select id="targetSheet" onchange="refreshColumns()"></select>
+                </div>
+                <div class="form-group">
+                    <label>数据在哪一页 (来源Sheet)</label>
+                    <select id="sourceSheet" onchange="refreshColumns()"></select>
+                </div>
+            </div>
+
+            <div class="control-grid">
+                <div class="form-group">
+                    <label>靠什么来匹配 (如: 学号)</label>
+                    <select id="targetKey"></select>
+                </div>
+                <div class="form-group">
+                    <label>对应来源表的哪一列 (如: 学号)</label>
+                    <select id="sourceKey"></select>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 2rem 0 1rem;">
+                <h3 style="margin: 0; font-size: 1.2rem;">具体要填充什么内容 (填充规则)</h3>
+            </div>
+
+            <div id="mappingRows" class="content-scroll-area">
+                <!-- Dynamic rows here -->
+            </div>
+
+            <div class="actions-bar">
+                <button class="btn-secondary" onclick="addMappingRow()">
+                    + 添加规则
+                </button>
+                <button class="btn-primary" onclick="generatePreview()">
+                    预览效果
+                </button>
+            </div>
+        </div>
+
+        <div id="previewBox" class="preview-box" style="display: none;">
+            <div class="preview-stats" id="previewStats"></div>
+            <button class="btn-primary" onclick="executeMerge()" style="background: #34c759;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    stroke-width="2" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                确认合并并下载
+            </button>
+        </div>
+
+
+    </div>
+
+    <!-- Scripts -->
+    <!-- Scripts -->
+    <script>
+        let targetMetadata = {};
+        let sourceMetadata = {};
+        let isSameFile = false;
+
+        async function handleUpload(type) {
+            const input = document.getElementById(type + 'File');
+            if (input.files.length === 0) return;
+
+            const formData = new FormData();
+            formData.append('file', input.files[0]);
+
+            // UI Feedback
+            const fileNameElem = document.getElementById(type + 'FileName');
+            const badge = document.getElementById(type + 'StatusBadge');
+            const badgeText = document.getElementById(type + 'StatusText');
+
+            fileNameElem.innerText = "正在上传...";
+
+            // Add iOS-style loading state
+            input.parentElement.closest('.file-card').style.opacity = '0.7';
+
+            try {
+                const response = await fetch('/upload', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                // Reset opacity
+                input.parentElement.closest('.file-card').style.opacity = '1';
+
+                if (type === 'target') {
+                    targetMetadata = data;
+                    fillSheets('targetSheet', data.sheets);
+
+                    // Auto-sync if "Same File" is checked
+                    if (isSameFile) {
+                        syncSourceWithTarget();
+                    }
+                } else {
+                    sourceMetadata = data;
+                    fillSheets('sourceSheet', data.sheets);
+                }
+
+                // Update UI Success
+                fileNameElem.innerText = data.filename;
+                fileNameElem.style.color = 'var(--text-main)';
+                badge.style.display = 'flex';
+                badge.classList.add('active');
+                badgeText.innerText = '已就绪 (Ready)';
+
+                checkReadyState();
+            } catch (e) {
+                console.error(e);
+                fileNameElem.innerText = "上传失败，请重试";
+                input.parentElement.closest('.file-card').style.opacity = '1';
+            }
+        }
+
+        function toggleSameFile() {
+            const checkbox = document.getElementById('sameFileCheck');
+            const sourceCard = document.getElementById('sourceCard');
+            const sourceInput = document.getElementById('sourceFile');
+            isSameFile = checkbox.checked;
+
+            if (isSameFile) {
+                sourceCard.classList.add('disabled-card');
+                sourceCard.onclick = null; // Disable click
+
+                if (targetMetadata.filename) {
+                    syncSourceWithTarget();
+                } else {
+                    document.getElementById('sourceFileName').innerText = "等待目标文件...";
+                }
+            } else {
+                sourceCard.classList.remove('disabled-card');
+                sourceCard.onclick = () => document.getElementById('sourceFile').click();
+                document.getElementById('sourceFileName').innerText = "点击选择数据来源文件";
+                document.getElementById('sourceStatusBadge').style.display = 'none';
+                sourceMetadata = {};
+            }
+            checkReadyState();
+        }
+
+        function syncSourceWithTarget() {
+            sourceMetadata = { ...targetMetadata }; // Copy metadata
+
+            // UI Update for Source Card
+            document.getElementById('sourceFileName').innerText = "🔗 同目标文件 (Same as Target)";
+            document.getElementById('sourceFileName').style.color = 'var(--primary-color)';
+
+            const badge = document.getElementById('sourceStatusBadge');
+            badge.style.display = 'flex';
+            badge.classList.add('active');
+            document.getElementById('sourceStatusText').innerText = '已同步';
+
+            fillSheets('sourceSheet', sourceMetadata.sheets);
+            checkReadyState();
+        }
+
+        function checkReadyState() {
+            if (targetMetadata.filename && sourceMetadata.filename) {
+                document.getElementById('step-2').style.display = 'block';
+                // Only refresh if sheets are selected or defaulted
+                setTimeout(refreshColumns, 100);
+            }
+        }
+
+        function fillSheets(elementId, sheets) {
+            const select = document.getElementById(elementId);
+            select.innerHTML = sheets.map(s => `<option value="${s}">${s}</option>`).join('');
+        }
+
+        async function refreshColumns() {
+            const tSheet = document.getElementById('targetSheet').value;
+            const sSheet = document.getElementById('sourceSheet').value;
+
+            if (!tSheet || !sSheet) return;
+
+            const response = await fetch('/get_columns', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    target_file: targetMetadata.temp_path,
+                    source_file: sourceMetadata.temp_path,
+                    target_sheet: tSheet,
+                    source_sheet: sSheet
+                })
+            });
+            const data = await response.json();
+
+            fillHeaders('targetKey', data.target_columns);
+            fillHeaders('sourceKey', data.source_columns);
+
+            window.targetCols = data.target_columns;
+            window.sourceCols = data.source_columns;
+
+            // Update all existing mapping rows with new columns
+            document.querySelectorAll('.map-row').forEach(row => {
+                const tgtSelect = row.querySelector('.tgt-fill');
+                const srcSelect = row.querySelector('.src-fill');
+
+                const oldTgtVal = tgtSelect.value;
+                const oldSrcVal = srcSelect.value;
+
+                tgtSelect.innerHTML = window.targetCols.map(c => `<option value="${c}">${c}</option>`).join('');
+                srcSelect.innerHTML = window.sourceCols.map(c => `<option value="${c}">${c}</option>`).join('');
+
+                // Try to keep selected value if it still exists
+                if (window.targetCols.includes(oldTgtVal)) tgtSelect.value = oldTgtVal;
+                if (window.sourceCols.includes(oldSrcVal)) srcSelect.value = oldSrcVal;
+            });
+        }
+
+        function fillHeaders(elementId, cols) {
+            if (!cols) return;
+            const select = document.getElementById(elementId);
+            const currentVal = select.value;
+            select.innerHTML = cols.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            // Smart default logic
+            const likelyKeys = ["学号", "ID", "id", "No.", "编号", "工号", "名称", "Name"];
+            const match = cols.find(c => likelyKeys.some(k => c.includes(k)));
+            if (match) select.value = match;
+        }
+
+        function addMappingRow() {
+            const container = document.getElementById('mappingRows');
+            const div = document.createElement('div');
+            div.className = 'map-row';
+            div.innerHTML = `
+                <div class="select-wrapper">
+                    <select class="tgt-fill">${window.targetCols.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
+                </div>
+                <div class="arrow-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                    </svg>
+                </div>
+                <div class="select-wrapper">
+                    <select class="src-fill">${window.sourceCols.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
+                </div>
+                <button class="btn-remove" onclick="this.parentElement.remove()" title="Remove Rule">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        async function generatePreview() {
+            const mapping = [];
+            document.querySelectorAll('.map-row').forEach(row => {
+                mapping.push({
+                    src: row.querySelector('.src-fill').value,
+                    tgt: row.querySelector('.tgt-fill').value
+                });
+            });
+
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="loading-spinner"></span> 计算中...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/preview', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        target_file: targetMetadata.temp_path,
+                        source_file: sourceMetadata.temp_path,
+                        target_sheet: document.getElementById('targetSheet').value,
+                        source_sheet: document.getElementById('sourceSheet').value,
+                        target_key: document.getElementById('targetKey').value,
+                        source_key: document.getElementById('sourceKey').value,
+                        mapping: mapping
+                    })
+                });
+                const data = await response.json();
+
+                document.getElementById('previewBox').style.display = 'block';
+                document.getElementById('previewStats').innerHTML = `
+                < div class="stat-item" >
+                        <span class="stat-label">总数据量</span>
+                        <span class="stat-value">${data.total}</span>
+                    </div >
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-label" style="color:var(--success)">✅ 成功匹配</span>
+                        <span class="stat-value" style="color:var(--success)">${data.matches}</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-label" style="color:var(--warning)">⚠️ 未匹配</span>
+                        <span class="stat-value" style="color:var(--warning)">${data.misses}</span>
+                    </div>
+                `;
+
+                document.getElementById('previewBox').scrollIntoView({ behavior: 'smooth' });
+            } catch (e) {
+                alert('预览失败: ' + e);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function executeMerge() {
+            const mapping = [];
+            document.querySelectorAll('.map-row').forEach(row => {
+                mapping.push({
+                    src: row.querySelector('.src-fill').value,
+                    tgt: row.querySelector('.tgt-fill').value
+                });
+            });
+
+            const body = {
+                target_file: targetMetadata.temp_path,
+                source_file: sourceMetadata.temp_path,
+                target_sheet: document.getElementById('targetSheet').value,
+                source_sheet: document.getElementById('sourceSheet').value,
+                target_key: document.getElementById('targetKey').value,
+                source_key: document.getElementById('sourceKey').value,
+                mapping: mapping
+            };
+
+            const response = await fetch('/merge', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "Merged_Result_Pro.xlsx";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+    </script>
+</body>
+
+</html>
